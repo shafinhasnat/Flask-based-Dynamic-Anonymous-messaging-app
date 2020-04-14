@@ -1,0 +1,13 @@
+{% extends 'layout.html' %}
+{% block content %}
+		<div class=''>
+			<div class='border border-dark rounded-lg p-4'>
+			<h3 class="border-bottom mb-4">Dashboard of- {{ username }}</h3>
+				{% for messages in message %}
+					<div class='border-bottom mb-2'>
+						<div class='border border-dark rounded-lg p-2 mb-2'>{{ messages.msg }}</div>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+{% endblock %}
