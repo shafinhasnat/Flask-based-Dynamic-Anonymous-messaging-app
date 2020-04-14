@@ -9,7 +9,12 @@ from flask_login import login_user,LoginManager,current_user,logout_user,login_r
 
 @app.route('/')
 def Home():
-	return render_template('layout.html')
+	if current_user.is_active:
+		query_user = User.query.filter_by(id=current_user.id).first()
+		username = query_user.username
+		return redirect(url_for('Dashboard', username=username))
+	else:
+		return render_template('layout.html')
 
 @app.route('/about')
 def About():
