@@ -1,3 +1,0 @@
-from anonymous import db
-from anonymous.models import User
-db.create_all()
