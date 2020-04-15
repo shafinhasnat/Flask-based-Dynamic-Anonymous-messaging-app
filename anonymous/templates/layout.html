@@ -23,18 +23,25 @@
       justify-content: center;
       align-items: center;
     }
-    img {
+    .dash {
     width: 250px; /* You can set the dimensions to whatever you want */
     height: 250px;
     object-fit: contain;
-}
+    }
+    .title-img{
+    width: 30px; /* You can set the dimensions to whatever you want */
+    height: 30px;
+    object-fit: contain;
+    }
   </style>
 	<title>ANONIMAS | {{ title }}</title>
+  <link rel="icon" href="{{ url_for('static', filename='icon.ico') }}" type="image/icon type">
 </head>
 <body>
 	<header class='site-header'>
       <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
         <div class="container">
+          <img class='title-img' src="{{ url_for('static', filename='mask.png') }}">
           <a class="navbar-brand mr-4" href="/">ANONIMAS</a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>

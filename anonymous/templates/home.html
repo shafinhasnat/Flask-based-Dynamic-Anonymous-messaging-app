@@ -23,19 +23,24 @@
       justify-content: center;
       align-items: center;
     }
-    img {
-    width: 250px; /* You can set the dimensions to whatever you want */
-    height: 250px;
+    .title-img{
+    width: 30px; /* You can set the dimensions to whatever you want */
+    height: 30px;
     object-fit: contain;
-}
+    }
   </style>
 	<title>ANONIMAS | Home</title>
+	<link rel="icon" href="{{ url_for('static', filename='icon.ico') }}" type="image/icon type">
 </head>
 <body>
 	<header class='site-header pb-5'>
       <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
         <div class="container">
-          <a class="navbar-brand mr-4" href="/">ANONIMAS</a>
+        	<div></div>
+        	<div>
+        	<img class='title-img' src="{{ url_for('static', filename='mask.png') }}">
+          <a class="navbar-brand mr-4" href="/">ANONIMAS</a></div>
+        	<div></div>
         </div>
       </nav>
 	</header>
@@ -43,11 +48,11 @@
 	<div class='border border-dark rounded-lg p-4'>
 		<p class="border-bottom mb-4">{{ text }}</p>
 		New here?
-		<a href="{{ url_for('Signup') }}" class="btn btn-secondary btn-lg btn-block">Join today</a>
+		<a href="{{ url_for('Signup') }}" class="btn btn-dark btn-lg btn-block">Join today</a>
 		<br>
 		<p class="border-bottom mb-4"></p>
 		Already have an account?
-		<a href="{{ url_for('Login') }}" class="btn btn-secondary btn-lg btn-block">Login</a>
+		<a href="{{ url_for('Login') }}" class="btn btn-dark btn-lg btn-block">Login</a>
 		<br>
 		<p class="border-bottom"></p>
 	</div>
