@@ -54,7 +54,7 @@ def Login():
 		if user and bcrypt.check_password_hash(user.password, form.password.data):
 			login_user(user, remember = form.remember.data)
 			next_page = request.args.get('next')
-			print('++++++++++++++++++++',next_page)
+			# print('++++++++++++++++++++',next_page)
 			return redirect(next_page) if next_page else redirect(url_for('Dashboard', username=user.username))
 		else:
 			return 'login failed!'
@@ -100,7 +100,7 @@ def Landing(username):
 @app.route('/u/<username>/dashboard')
 @login_required
 def Dashboard(username):
-	print(current_user.is_active,'************************')
+	# print(current_user.is_active,'************************')
 	if current_user.is_authenticated:
 		query_user = User.query.filter_by(username=username).first()
 		user = query_user.unique_id
