@@ -15,7 +15,7 @@ def Home():
 		username = query_user.username
 		return redirect(url_for('Dashboard', username=username))
 	else:
-		return render_template('layout.html')
+		return render_template('home.html')
 
 @app.route('/about')
 def About():
@@ -79,6 +79,7 @@ def Landing(username):
 		return 'This page doesnt exist'
 	else:
 		username = database_query.username
+		text = 'Message sent anonymously to {}!!'.format(username)
 		unique_id = database_query.unique_id
 		if form.validate_on_submit():
 			print('message submitted!')
@@ -93,6 +94,13 @@ def Landing(username):
 			# msg = Message(msg = form.txt_msg.data, unique_id = str(unique_id))
 			db.session.add(msg)
 			db.session.commit()
+			if current_user.is_active:
+				query_user = User.query.filter_by(id=current_user.id).first()
+				username = query_user.username
+				return redirect(url_for('Dashboard', username=username))
+			else:
+				text = "Message sent anonymously to {}!!".format(username)
+				return render_template('home.html', text=text)
 		else:
 			print('message submission failed!')
 		return render_template('landing.html', username=str(username), form=form)
