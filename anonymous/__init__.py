@@ -6,7 +6,7 @@ from flask_login import LoginManager
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'asdfasdfasdf8709asd8f7a9s8dfyuiashdfh'
 
-ENV = 'Prod'
+ENV = 'prod'
 if ENV == 'dev':
     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:19971904@localhost/hackathon'
     app.debug = True

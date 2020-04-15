@@ -85,10 +85,12 @@ def Landing(username):
 			image = form.img_msg.data
 			try:
 				b64_image = base64.b64encode(image.read()).decode()
+				# print('++++****+++',b64_image)
 				msg = Message(msg = form.txt_msg.data, image = b64_image, unique_id = str(unique_id))
 			except:
-				pass
-			msg = Message(msg = form.txt_msg.data, unique_id = str(unique_id))
+				msg = Message(msg = form.txt_msg.data, unique_id = str(unique_id))
+			 	
+			# msg = Message(msg = form.txt_msg.data, unique_id = str(unique_id))
 			db.session.add(msg)
 			db.session.commit()
 		else:
