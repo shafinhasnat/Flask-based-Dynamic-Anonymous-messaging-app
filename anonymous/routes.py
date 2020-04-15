@@ -5,6 +5,7 @@ from anonymous.models import User, Message, Process
 import os
 import secrets
 from flask_login import login_user,LoginManager,current_user,logout_user,login_required
+import base64
 
 
 @app.route('/')
@@ -34,7 +35,7 @@ def Signup():
 		user = User(username=form.username.data, email=form.email.data, password=hashed_password, unique_id=str(form.username.data+unique_hex))
 		db.session.add(user)
 		db.session.commit()
-		return render_template('layout.html')
+		return redirect(url_for('Login'))
 	else:
 		print('Signup form error')
 	return render_template('signup.html', title=title, form=form, text=text)
@@ -81,6 +82,12 @@ def Landing(username):
 		unique_id = database_query.unique_id
 		if form.validate_on_submit():
 			print('message submitted!')
+			image = form.img_msg.data
+			try:
+				b64_image = base64.b64encode(image.read()).decode()
+				msg = Message(msg = form.txt_msg.data, image = b64_image, unique_id = str(unique_id))
+			except:
+				pass
 			msg = Message(msg = form.txt_msg.data, unique_id = str(unique_id))
 			db.session.add(msg)
 			db.session.commit()
