@@ -23,7 +23,7 @@ class Message(db.Model):
 	date_posted = db.Column(db.DateTime(), nullable = False, default = datetime.utcnow)
 	unique_id = db.Column(db.String(), db.ForeignKey('user.unique_id'), nullable = False)
 	def __repr__(self):
-		return f"Message('{self.title}', '{self.date_posted}')"
+		return f"Message('{self.msg}', '{self.image}', '{self.unique_id}')"
 
 
 class Process(UserMixin):
