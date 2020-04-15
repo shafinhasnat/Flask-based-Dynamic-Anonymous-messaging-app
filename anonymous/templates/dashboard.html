@@ -4,13 +4,16 @@
 			<div class='border border-dark rounded-lg p-4'>
 			<h3 class="border-bottom mb-4">Dashboard of- {{ username }}</h3>
 				{% for messages in message %}
-					<div class='border-bottom mb-2'>
+					<div class='border-bottom'>
 						<small class="text-muted">{{ messages.date_posted }}</small>
 						<div class='border border-dark rounded-lg p-2 mb-2'>
 							{{ messages.msg }}
-							<div>
-								<img src="data:image/png;base64, {{ messages.image }}">
+							{% if messages.image==None %}
+							{% else %}
+							<div class="image">
+								<img class='border border-secondary rounded-lg' src="data:image/png;base64, {{ messages.image }}">
 							</div>
+							{% endif %}
 						</div>
 					</div>
 				{% endfor %}
