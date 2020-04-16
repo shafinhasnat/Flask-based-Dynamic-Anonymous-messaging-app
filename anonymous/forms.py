@@ -17,6 +17,6 @@ class LoginForm(FlaskForm):
 	submit = SubmitField('Login')
 
 class LandingForm(FlaskForm):
-	txt_msg = TextAreaField('Your message')
+	txt_msg = TextAreaField('Your message', validators = [Length(max=300)])
 	img_msg = FileField('Upload image', validators = [FileAllowed(['jpg', 'png', 'jpeg'])])
 	submit = SubmitField('Send Anonymously!')
