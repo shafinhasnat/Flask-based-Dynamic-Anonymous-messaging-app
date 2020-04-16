@@ -65,6 +65,7 @@ def Login():
 			login_user(user, remember = form.remember.data)
 			next_page = request.args.get('next')
 			# print('++++++++++++++++++++',next_page)
+			flash(f'Welcome to your dashboard!!', 'success')
 			return redirect(next_page) if next_page else redirect(url_for('Dashboard', username=user.username))
 		else:
 			flash(f'Login failed! Check your email and password', 'danger')
@@ -87,11 +88,6 @@ def Landing(username):
 	form = LandingForm()
 	text = ' landing page'
 	database_query =  User.query.filter_by(username=username).first()
-	if current_user.is_active:
-		query_user = User.query.filter_by(id=current_user.id).first()
-		username = query_user.username
-		flash(f'You cannot send anonymous message to yourself :v', 'warning')
-		return redirect(url_for('Dashboard', username=username))
 	if database_query is None:
 		return 'This page doesnt exist'
 	else:
