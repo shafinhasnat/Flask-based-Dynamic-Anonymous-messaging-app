@@ -29,15 +29,21 @@ def Signup():
 	title = 'Signup'
 	text = 'This is signup page'
 	unique_hex = secrets.token_hex(4)
-	if form.validate_on_submit():
-		print('Signup form validated')
-		hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-		user = User(username=form.username.data, email=form.email.data, password=hashed_password, unique_id=str(form.username.data+unique_hex))
-		db.session.add(user)
-		db.session.commit()
-		return redirect(url_for('Login'))
-	else:
-		print('Signup form error')
+	try:
+		if form.validate_on_submit():
+			print('Signup form validated')
+			hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+			user = User(username=form.username.data, email=form.email.data, password=hashed_password, unique_id=str(form.username.data+unique_hex))
+			db.session.add(user)
+			db.session.commit()
+			flash(f'Your account has been created successfully! You are able to log in', 'success')
+			return redirect(url_for('Login'))
+		else:
+			print('////////************Signup form error')
+			pass
+	except:
+		flash(f'This username or email address is already taken!', 'danger')
+		return redirect(url_for('Signup'))
 	return render_template('signup.html', title=title, form=form, text=text)
 
 
@@ -46,6 +52,10 @@ def Login():
 	form = LoginForm()
 	title = 'Login'
 	text = 'This is login page'
+	if current_user.is_active:
+		query_user = User.query.filter_by(id=current_user.id).first()
+		username = query_user.username
+		return redirect(url_for('Dashboard', username=username))
 	if current_user.is_authenticated:
 		return redirect(url_for('Dashboard', username=user.username))
 	elif form.validate_on_submit():
@@ -57,9 +67,11 @@ def Login():
 			# print('++++++++++++++++++++',next_page)
 			return redirect(next_page) if next_page else redirect(url_for('Dashboard', username=user.username))
 		else:
-			return 'login failed!'
+			flash(f'Login failed! Check your email and password', 'danger')
+			return render_template('login.html', title=title, text=text, form=form)
 	else:
-		print('Login form error')
+		# flash(f'Error occurred!!', 'danger')
+		return render_template('login.html', title=title, text=text, form=form)
 	return render_template('login.html', title=title, text=text, form=form)
 
 
@@ -75,6 +87,11 @@ def Landing(username):
 	form = LandingForm()
 	text = ' landing page'
 	database_query =  User.query.filter_by(username=username).first()
+	if current_user.is_active:
+		query_user = User.query.filter_by(id=current_user.id).first()
+		username = query_user.username
+		flash(f'You cannot send anonymous message to yourself :v', 'warning')
+		return redirect(url_for('Dashboard', username=username))
 	if database_query is None:
 		return 'This page doesnt exist'
 	else:
@@ -100,6 +117,7 @@ def Landing(username):
 				return redirect(url_for('Dashboard', username=username))
 			else:
 				text = "Message sent anonymously to {}!!".format(username)
+				flash(f'{text}', 'success')
 				return render_template('home.html', text=text)
 		else:
 			print('message submission failed!')
@@ -117,9 +135,10 @@ def Dashboard(username):
 		if str(query_user.id) == str(current_user.id):
 			message = Message.query.filter_by(unique_id=user)
 			title = "Dashboard"
-			text = "This is dashboard of {}".format(username)
-			return render_template('dashboard.html', title=title, text=text, username=username, message=message)
+			text = "Dashboard of {}".format(username)
+			url = username.replace(" ", "%20") 
+			return render_template('dashboard.html', title=title, text=text, username=username, message=message, url=url)
 		else:
-			return('You are not authenticated')
+			return redirect(url_for('Home'))
 	else:
-		return('You are not authenticated')
+		return redirect(url_for('Home'))

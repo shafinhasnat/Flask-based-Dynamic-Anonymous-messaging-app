@@ -12,7 +12,16 @@
 				</div>
 				<div class="form-group">
 				    <label>Image</label>
-				    {{ form.img_msg(class='form-control-file') }}
+					{% if form.img_msg.errors %}
+                        {{ form.img_msg(class="form-control form-control is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.img_msg.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.img_msg(class="form-control", placeholder="Username") }}
+                    {% endif %}
 				    <small id="emailHelp" class="form-text text-muted">You can include some nudes :v!!!</small>
 				</div>
 				{{ form.submit(class='btn btn-dark') }}
@@ -20,3 +29,7 @@
 		</div>
 	</div>
 {% endblock %}
+</html>
+
+
+        

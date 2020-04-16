@@ -1,12 +1,31 @@
 {% extends 'layout.html' %}
 {% block content %}
 		<div class='' style='width: 100%'>
-			Share this URL with your friends- <i>https://anonimas.herokuapp.com/u/{{ username }}</i>
+			    <div class="">
+					Share this URL with your friends- 
+			    </div>
+			 <div class="form-row pb-2">
+			    <div class="col-5">
+			      <input class='form-control col-form-label-sm' value="anonimas.herokuapp.com/u/{{ url }}" id="myInput" readonly>
+			    </div>
+			    <div class="col">
+			      <button class="btn btn-sm btn-outline-secondary" onclick="myFunction()"><img src="{{ url_for('static', filename='copy.png') }}"></button>
+			    </div>
+  			</div>
 			<div class='border border-dark rounded-lg p-4'>
+			{% with flash_messages = get_flashed_messages(with_categories=true) %}
+		      	{% if flash_messages %}
+			        {% for category, flash_message in flash_messages %}
+				        <div class="alert alert-{{ category }}">
+				        {{ flash_message }}
+				        </div>
+			        {% endfor %}
+		      	{% endif %}
+	    	{% endwith %}
 			<h3 class="border-bottom mb-4">Dashboard of- {{ username }}</h3>
 				{% for messages in message %}
 					<div class='border-bottom'>
-						<small class="text-muted">{{ messages.date_posted }}</small>
+						<small class="text-muted">Message from Anonymous!</small>
 						<div class='border border-dark rounded-lg p-2 mb-2'>
 							{{ messages.msg }}
 							{% if messages.image==None %}

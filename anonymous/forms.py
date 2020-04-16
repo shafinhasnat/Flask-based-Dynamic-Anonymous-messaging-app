@@ -11,12 +11,12 @@ class SignupForm(FlaskForm):
 	submit = SubmitField('Signup')
 
 class LoginForm(FlaskForm):
-	email = StringField('Email')
-	password = PasswordField('Password')
+	email = StringField('Email', validators = [DataRequired(), Email()])
+	password = PasswordField('Password', validators = [DataRequired(), Length(min=3, max=50)])
 	remember = BooleanField('Remember me')
 	submit = SubmitField('Login')
 
 class LandingForm(FlaskForm):
 	txt_msg = TextAreaField('Your message')
-	img_msg = FileField('Upload image', validators = [FileAllowed(['jpg', 'png'])])
+	img_msg = FileField('Upload image', validators = [FileAllowed(['jpg', 'png', 'jpeg'])])
 	submit = SubmitField('Send Anonymously!')
