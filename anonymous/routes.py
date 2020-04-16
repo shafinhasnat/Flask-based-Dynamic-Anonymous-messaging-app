@@ -117,7 +117,7 @@ def Landing(username):
 				return render_template('home.html', text=text)
 		else:
 			print('message submission failed!')
-		return render_template('landing.html', username=str(username), form=form)
+		return render_template('landing.html', username=str(username), form=form, title=username)
 
 @app.route('/u/<username>/dashboard')
 @login_required
