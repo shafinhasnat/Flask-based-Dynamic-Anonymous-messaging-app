@@ -11,7 +11,7 @@ if ENV == 'dev':
     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:19971904@localhost/hackathon'
     app.debug = True
 else:
-	app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://szdsmhokovgiwm:fe336221ed830cf18d191827566da4c8e94b3aa1b10d341081dd78ecb94cef58@ec2-52-72-221-20.compute-1.amazonaws.com:5432/df8cjm0bpq8h0f'
+	app.config['SQLALCHEMY_DATABASE_URI'] = ''
 	app.debug = False
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
